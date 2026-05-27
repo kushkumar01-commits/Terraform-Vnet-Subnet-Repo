@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    azurerm ={
+        source = "hashicorp/azurerm"
+        version = "4.70.0"
+    }
+  }
+}
+provider "azurerm" {
+  features {}
+  }
+variable "kushsbts" {}
+
+resource "azurerm_subnet" "Arra1" {
+    for_each = var.kushsbts
+  name                 = each.value.name
+  resource_group_name  = each.value.resource_group_name
+  virtual_network_name = each.value.virtual_network_name
+  address_prefixes     = each.value.address_prefixes
+}
+kushsbts = {
+    sbt1 = {
+        name = "kushsbt3"
+        resource_group_name  = "kushrg3"
+        virtual_network_name = "kushvnt3"
+        address_prefixes     = ["10.0.1.0/24"]
+
+    }
+     sbt2 = {
+        name = "kushsbt4"
+        resource_group_name  = "kushrg4"
+        virtual_network_name = "kushvnt4"
+        address_prefixes     = ["10.1.0.0/24"]
+
+    }
+}
