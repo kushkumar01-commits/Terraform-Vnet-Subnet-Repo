@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    azurerm ={
+        source = "hashicorp/azurerm"
+        version = "4.70.0"
+    }
+  }
+}
+provider "azurerm" {
+  features {}
+  }
+variable "kushstg" {}
+
+
+resource "azurerm_storage_account" "Arra2"{
+for_each = var.kushstg
+name = each.value.name
+resource_group_name = each.value.resource_group_name
+location = each.value.location
+account_tier = each.value.account_tier
+account_replication_type = each.value.account_replication_type
+}
+kushstg = {
+    stg1 = {
+        name = "kushstg3"
+        resource_group_name = "kushrg3"
+        location = "eastus"
+        account_tier = "Standard"
+        account_replication_type = "GRS"
+    }
+    stg2 = {
+        name = "kushstg4"
+        resource_group_name = "kushrg4"
+        location = "westus"
+        account_tier ="Standard"
+        account_replication_type = "GRS"
+    }
+}
