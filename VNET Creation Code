@@ -1,0 +1,35 @@
+terraform {
+  required_providers {
+    azurerm ={
+        source = "hashicorp/azurerm"
+        version = "4.70.0"
+    }
+  }
+}
+provider "azurerm" {
+  features {}
+  }
+variable "kushvnts" {}
+
+
+resource "azurerm_virtual_network" "Arra1" {
+    for_each = var.kushvnts
+  name                = each.value.name
+  location            = each.value.location
+  resource_group_name = each.value.resource_group_name
+  address_space       = each.value.address_space
+}
+kushvnts = {
+    vnt1 = {
+        name = "kushvnt3"
+        resource_group_name = "kushrg3"
+        location ="eastus"
+        address_space       = ["10.0.0.0/16"]
+    }
+    vnt2 = {
+        name = "kushvnt4"
+        resource_group_name = "kushrg4"
+        location ="westus"
+        address_space       = ["10.1.0.0/16"]
+    }
+}
