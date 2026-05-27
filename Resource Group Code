@@ -1,1 +1,35 @@
+terraform {
+  required_providers {
+    azurerm ={
+        source = "hashicorp/azurerm"
+        version = "4.70.0"
+    }
+  }
+}
+provider "azurerm" {
+  features {}
+  }
 
+
+
+variable "kushrgs"{}
+
+
+
+resource "azurerm_resource_group" "Arra1" {
+    for_each = var.kushrgs
+    name = each.value.name
+    location = each.value.location
+  
+}
+kushrgs = {
+    kushrg1 = {
+        name = "kushrg3"
+        location = "eastus"
+
+    }
+    kushrg2 = {
+        name = "kushrg4"
+        location = "westus"
+    }
+}
